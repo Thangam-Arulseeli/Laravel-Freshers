@@ -68,8 +68,12 @@ public function getActiveAttribute($attribute){
     // ][$attribute];
 
     // Refactoring..... Using activeOptions()
-    return $this->activeOptions()[$attribute]; 
-
+    //return $this->activeOptions()[$attribute]; 
+    if (isset($this->activeOptions()[$attribute])) {
+        return $this->activeOptions()[$attribute];
+    } else {
+        return;
+    }
   }
   public function activeOptions(){
     return [ 
