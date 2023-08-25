@@ -200,7 +200,7 @@
               <button class="btn btn-danger" type="submit">Add New Customer</button>
         </form>
         </div> --}}
-        <a href='{!! url('http://127.0.0.1:8000/customers/create'); !!}'>ADD NEW1</a> 
+        {{-- <a href='{!! url('http://127.0.0.1:8000/customers/create'); !!}'>ADD NEW1</a>  --}}
          {{-- <a href='{{ route('customers/create') }}'> ADD NEW2 </a>  --}}
   <p align="right"> <a href="customers.create"> Add New Customer </a></p>  
   
@@ -232,7 +232,8 @@
         <td>{{$customer->mailid}}</td>
        {{-- <td>{{$customer->active ? "Active" : "Inactive"}}</td>  --}}
         <td>{{$customer->active }}</td> 
-       <td>{{$customer->companyid}}</td> 
+        <td>{{$customer->companyid}}</td>  
+       {{-- <td> {{ optional($customer->company)->cpyname }} </td> --}}
      </tr>   
  @endforeach
  </table>

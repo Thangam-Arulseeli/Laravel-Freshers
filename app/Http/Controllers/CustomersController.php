@@ -143,7 +143,7 @@ class CustomersController extends Controller
      public function index(){
         
      // $companies = Company::all();// Use the modelname::all() -- Eloquent ORM;
-      $customers = Customer::all();
+     // $customers = Customer::all();
      
       //dd($customers);
      //return view ('customers.index',['customerlist' => $customers]); // Passing associative array to blade view in customers folder
@@ -160,6 +160,9 @@ class CustomersController extends Controller
     //             ]
     //           ); // Passing associative array to blade view in customers folder, array with 2 values as 2nd argument
     // return view ('customers.index', compact('customers','companies'));
+        // $customers = Customer::all();
+      
+    $customers = Customer::with('company')->get();
     return view ('customers.index', compact('customers'));
   }
 

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('mailid',50);
             $table->integer('active');
             $table->unsignedBigInteger('companyid');
+          //  $table->foreignId('companies')->nullable()->constrained();
             $table->timestamps();
         });
     }
