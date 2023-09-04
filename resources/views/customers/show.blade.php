@@ -1,10 +1,11 @@
-@extends('layout')
+ @extends('layout') 
+{{-- @extends('layouts.app') --}}
 @section('content')
 <div class="col-sm-6">
 
 <h4> Details of {{$customer->name}} </h4>  
 
-{{-- <p align="right"> <a href="/customers.create"> Add New Customer </a></p>   --}}
+ <p align="right"> <a href="/customers/create"> Add New Customer </a></p>   
 <div class = "mx-3 my-3">
 <p> <a href="/customers/{{$customer->id}}/edit">Edit</a> </p>
 <form action ="/customers/{{$customer->id}}" method="post">

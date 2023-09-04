@@ -1,5 +1,6 @@
 {{-- <h3> This is my about page </h3>  --}}
 
+{{-- @extends('layouts.app') --}}
 @extends('layout')
     @section('content')
         @section('title')

@@ -188,8 +188,8 @@
 @endsection 
  --}}
 
-
- @extends('layout')
+  @extends('layout')  
+ {{-- @extends('layouts.app')   --}}
  @section('content')
  <div class="col-sm-6">
 
@@ -202,7 +202,7 @@
         </div> --}}
         {{-- <a href='{!! url('http://127.0.0.1:8000/customers/create'); !!}'>ADD NEW1</a>  --}}
          {{-- <a href='{{ route('customers/create') }}'> ADD NEW2 </a>  --}}
-  <p align="right"> <a href="customers.create"> Add New Customer </a></p>  
+  <p align="right"> <a href="/customers.create"> Add New Customer - Index </a></p>  
   
  <h4> Customer List </h4>      
  <div class="row py-3">

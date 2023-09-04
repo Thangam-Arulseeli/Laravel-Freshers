@@ -124,10 +124,15 @@ class CustomersController extends Controller
 
 namespace App\Http\Controllers;  // Should be included when Controller is created
 
+use App\Events\NewCustomerHasRegisteredEvent;
 use Illuminate\Http\Request;
 //use App\Http\Controllers\CustomersController; // // Should be included when CustomersController is created
 use App\Models\Customer;  // Should be included when Customer model is created
 use App\Models\Company; // Company Model should be included
+
+// Mailing purpose after new Customer creation
+use App\Mail\WelcomeNewUserMail;
+use Illuminate\Support\Facades\Mail;
 
 class CustomersController extends Controller
 {
@@ -138,6 +143,24 @@ class CustomersController extends Controller
   //   ];
   //   return view ('customers.index',['customerlist' => $customers]); // Passing associative array to blade view in customers folder
   // }
+
+  // Way – 2.1 Authentication using Customer Controller – All pages/actions in the CustomerController
+//Create a constructor and keep the authentication
+//public function __construct(){
+//  $this->middleware('auth');
+//}
+
+// Way – 2.2 Authentication using Customer Controller – Except some pages/actions 
+// [ Filler down the restriction to the different actions create, edit etc…. ] 
+// Way 2.2.  Authentication using Customer Controller using except 
+//public function __construct(){
+//  $this->middleware('auth')->except(['index']); // Locks out everything except index in CustomerContoller
+//}
+
+// Way 2.2.  Authentication using Customer Controller using only method 
+public function __construct(){
+  $this->middleware('auth')->only(['edit', 'delete']); // Locks only edit and delete in CustomerContoller [Opposite to except] }
+ }
 
   // When the Customers Controller is called it automatically refers index() 
      public function index(){
@@ -161,7 +184,8 @@ class CustomersController extends Controller
     //           ); // Passing associative array to blade view in customers folder, array with 2 values as 2nd argument
     // return view ('customers.index', compact('customers','companies'));
         // $customers = Customer::all();
-      
+    
+    // $customers=Customer::all();
     $customers = Customer::with('company')->get();
     return view ('customers.index', compact('customers'));
   }
@@ -203,9 +227,30 @@ class CustomersController extends Controller
     // $customer= Customer::create($data);
 
     // Customer::create($data);
-    Customer::create($this->validateRequest());
+   
    // return back();   // Calls the index.blade.php in customers view again
-    return redirect('customers'); 
+   
+   // Inserting a new customer details - For Final CRUD
+   //Customer::create($this->validateRequest()); 
+   //return redirect('customers'); 
+
+   // Inserting a new Customer, and send a welcome mail to customer
+   $customer = Customer::create($this->validateRequest());
+   //Mail::to($customer->mailid)->send(new WelcomeNewUserMail());
+    //return redirect('customers');  // Printing static message
+   //	return redirect('customers')->with('action-feedback',  'Your details are registered......');
+
+   // Register to Newsletter
+   // dump('Registered Subsription for Newsletter');
+
+   //Notify Admin
+   //dump('Notification to Admin about New User');
+
+   //Calling the event
+   event(new NewCustomerHasRegisteredEvent($customer));  // Calling the event
+   //return redirect('customers'); 
+
+  // return redirect('customers'); 
   }
 
    public function show(Customer $customer){ 

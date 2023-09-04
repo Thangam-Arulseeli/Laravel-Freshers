@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('cpyname',50);
             $table->string('address',100);
-            $table->double('contactno',12,0);
+          //  $table->string('contactno',20);
             $table->string('mailid',50);
             $table->timestamps();
         });
