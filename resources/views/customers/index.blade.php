@@ -236,10 +236,14 @@
        {{-- <td> {{ optional($customer->company)->cpyname }} </td> --}}
      </tr>   
  @endforeach
+ 
  </table>
  </div> 
+ <div class="col-12 d-flex justify-content-center pt-5">
+    {{$customers->links()}}
+ </div>  
  </div>
- </div>
+</div> 
  @endsection
  
 

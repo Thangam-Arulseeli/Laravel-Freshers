@@ -185,8 +185,9 @@ public function __construct(){
     // return view ('customers.index', compact('customers','companies'));
         // $customers = Customer::all();
     
-    // $customers=Customer::all();
-    $customers = Customer::with('company')->get();
+   // $customers=Customer::all();
+    // $customers = Customer::with('company')->get();
+    $customers = Customer::paginate(8);  // Set the pagination with 8 records per page
     return view ('customers.index', compact('customers'));
   }
 
@@ -240,15 +241,15 @@ public function __construct(){
     //return redirect('customers');  // Printing static message
    //	return redirect('customers')->with('action-feedback',  'Your details are registered......');
 
+    //Calling the event
+   event(new NewCustomerHasRegisteredEvent($customer));  // Calling the event
+   //return redirect('customers'); 
+
    // Register to Newsletter
    // dump('Registered Subsription for Newsletter');
 
    //Notify Admin
    //dump('Notification to Admin about New User');
-
-   //Calling the event
-   event(new NewCustomerHasRegisteredEvent($customer));  // Calling the event
-   //return redirect('customers'); 
 
   // return redirect('customers'); 
   }

@@ -28,7 +28,8 @@ class CustomerFactory extends Factory
             'mailid' => $this-> faker->unique()->safeEmail(),
             'active' => 1,
            // 'companyid' => Company::factory()->create()
-           'companyid' => App\Models\Customer::factory()->create(),
+           //'companyid' => App\Models\Customer::factory()->create(),
+           'companyid' => Customer::factory()->create(),
         ];
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeNewUserMail;
 
-class WelcomeNewCustomerListener
+class WelcomeNewCustomerListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -29,6 +29,7 @@ class WelcomeNewCustomerListener
     public function handle($event)
     {
         // Mail::to($customer->mailid)->send(new WelcomeNewUserMail());  // Sending mail to new customer from store() of controller
+        sleep(10);
         Mail::to($event->customer->mailid)->send(new WelcomeNewUserMail());
     }
 }
