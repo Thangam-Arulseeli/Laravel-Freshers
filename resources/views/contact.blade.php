@@ -17,7 +17,7 @@
 @extends('layout')
 {{-- @extends('layouts.app') --}}
 @section('content')
-<div class="container">
+<div class="container" id="mycss">
     <h3> Contact Details </h3>
     <h4> CG-VAK Software & Exports Ltd </h4> 
     <h5> Mettupalam Road </h5>

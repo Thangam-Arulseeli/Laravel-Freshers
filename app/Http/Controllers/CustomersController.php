@@ -133,6 +133,7 @@ use App\Models\Company; // Company Model should be included
 // Mailing purpose after new Customer creation
 use App\Mail\WelcomeNewUserMail;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 
 class CustomersController extends Controller
 {
@@ -185,9 +186,11 @@ public function __construct(){
     // return view ('customers.index', compact('customers','companies'));
         // $customers = Customer::all();
     
-   // $customers=Customer::all();
-    // $customers = Customer::with('company')->get();
-    $customers = Customer::paginate(8);  // Set the pagination with 8 records per page
+    //$customers=Customer::all();
+    //dd($customers->toArray());
+     $customers = Customer::with('company')->get();
+    // dd($customers->toArray());
+     // $customers = Customer::paginate(8);  // Set the pagination with 8 records per page
     return view ('customers.index', compact('customers'));
   }
 
@@ -210,7 +213,7 @@ public function __construct(){
       'email' => 'required|email',
      // 'mailid' => ['required', 'email', 'unique:customers']
        'active' => 'required',
-      'companyid' => 'required' 
+      'company_id' => 'required' 
     ]);   */
          
     // Simpler syntax for inserting a new record by storing each column to the Customer(Model) object
@@ -237,12 +240,14 @@ public function __construct(){
 
    // Inserting a new Customer, and send a welcome mail to customer
    $customer = Customer::create($this->validateRequest());
+   $this->storeImage($customer);
+   //dd($customer);
    //Mail::to($customer->mailid)->send(new WelcomeNewUserMail());
     //return redirect('customers');  // Printing static message
    //	return redirect('customers')->with('action-feedback',  'Your details are registered......');
 
     //Calling the event
-   event(new NewCustomerHasRegisteredEvent($customer));  // Calling the event
+   //event(new NewCustomerHasRegisteredEvent($customer));  // Calling the event
    //return redirect('customers'); 
 
    // Register to Newsletter
@@ -251,7 +256,7 @@ public function __construct(){
    //Notify Admin
    //dump('Notification to Admin about New User');
 
-  // return redirect('customers'); 
+   return redirect('customers'); 
   }
 
    public function show(Customer $customer){ 
@@ -276,10 +281,11 @@ public function __construct(){
         'contactno' => ['required', 'integer'],
         'mailid' => 'required|email',
         'active' => 'required',
-        'companyid' => 'required' 
+        'company_id' => 'required' 
     ]); */
     // $customer->update($data);
     $customer->update($this->validateRequest());
+    $this->storeImage($customer);
     return redirect('customers/'.$customer->id);
    }
 
@@ -296,7 +302,20 @@ public function __construct(){
         'contactno' => ['required', 'integer'],
         'mailid' => 'required|email',
         'active' => 'required',
-        'companyid' => 'required']); 
+        'company_id' => 'required',
+        'image' => 'sometimes|file|image|max:10000'
+      ]); 
    }
+
+   private function storeImage($customer){
+    if(request()->has('image')){
+      $customer->update([
+        'image' => request()->image->store('uploads','public'), 
+      ]);
+      $image = Image::make(public_path('storage/'.$customer->image))->fit(200,200);
+      $image->save();
+    }
+   }
+
   }
 ?>

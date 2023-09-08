@@ -25,8 +25,8 @@ return new class extends Migration
             $table->double('contactno',10,0);
             $table->string('mailid',50);
             $table->integer('active');
-            $table->unsignedBigInteger('companyid');
-          //  $table->foreignId('companies')->nullable()->constrained();
+            $table->unsignedBigInteger('company_id');
+            $table->string('image')->nullable();            //  $table->foreignId('companies')->nullable()->constrained();
             $table->timestamps();
         });
     }

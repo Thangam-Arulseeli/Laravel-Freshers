@@ -23,8 +23,20 @@
       <tr> <td> <strong>  Contact No.</strong> </td> <td> {{$customer->contactno}}</td>
       <tr> <td> <strong>  Mail ID</strong> </td> <td> {{$customer->mailid}}</td>
       <tr> <td> <strong>  Status </strong> </td> <td> {{$customer->active}}</td> 
-      <tr> <td> <strong>  Company Name</strong> </td> <td> {{$customer->companyid}}</td>
-     </table>
+      <tr> <td> <strong>  Company Name</strong> </td> <td> {{$customer->company_id}}</td>
+     <tr> <td> <strong>   Photo  </strong> </td> <td>
+     @if ($customer->image)
+	<div class="row">
+	<div class="col-6">
+		<img src="{{asset('storage/'.$customer->image)}}" alt="" class="img-thumbnail" >
+      </div>
+      </div>
+      @endif
+      </td> </tr>
+   </table>
+</div>
+
+
 </div>
 </div>
 @endsection

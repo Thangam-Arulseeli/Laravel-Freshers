@@ -5,7 +5,7 @@
 
 <h2> Add New Customer </h2>
  <div class="py-3">
-    <form action="/customers" method="post">
+    <form action="/customers" method="post" enctype="multipart/form-data">
     @include('customers.form')
 <div class="mb-3 mt-3  col-sm-6">  
     <button type="submit" class="btn btn-primary">Add Customer</button>

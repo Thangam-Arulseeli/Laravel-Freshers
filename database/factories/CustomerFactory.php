@@ -29,7 +29,8 @@ class CustomerFactory extends Factory
             'active' => 1,
            // 'companyid' => Company::factory()->create()
            //'companyid' => App\Models\Customer::factory()->create(),
-           'companyid' => Customer::factory()->create(),
+           'company_id' => Customer::factory()->create(),
+           'image' => $this->faker->name(),
         ];
     }
 }

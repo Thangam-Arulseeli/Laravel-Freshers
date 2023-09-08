@@ -53,13 +53,21 @@
     </div>
 </div>
 <div class="row mb-3">
-    <label for="companyid" class="col-sm-2 col-form-label">Company Name</label>
+    <label for="company_id" class="col-sm-2 col-form-label">Company Name</label>
     <div class="col-sm-4">
-    <select name="companyid" id="companyid" class="form-control">
+    <select name="company_id" id="company_id" class="form-control">
         @foreach($companies as $company)
-            <option value="{{$company->id}}"  {{$company->id == $customer->companyid ? 'selected' : ''}} > {{$company->cpyname}} </option>
+            <option value="{{$company->id}}"  {{$company->id == $customer->company_id ? 'selected' : ''}} > {{$company->cpyname}} </option>
         @endforeach
         </select>
     </div>
+</div>
+
+<div class="row mb-3">
+<label for="image" class="col-sm-2 col-form-label"> Profile Image </label>
+<div class="col-sm-4">
+    <input type="file" name="image" id="">
+       {{$errors->first('image')}}
+</div>
 </div>
 @csrf

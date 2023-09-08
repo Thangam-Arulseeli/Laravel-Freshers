@@ -217,7 +217,8 @@
        <th scope="col">Contact No.</th>
        <th scope="col">Mail ID</th>
        <th scope="col">Active</th>
-       <th scope="col">Company</th> 
+       <th scope="col">Company</th>
+       <th scope="col">Photo</th>  
      </tr>
    </thead>
    <tbody> 
@@ -232,16 +233,21 @@
         <td>{{$customer->mailid}}</td>
        {{-- <td>{{$customer->active ? "Active" : "Inactive"}}</td>  --}}
         <td>{{$customer->active }}</td> 
-        <td>{{$customer->companyid}}</td>  
-       {{-- <td> {{ optional($customer->company)->cpyname }} </td> --}}
-     </tr>   
+        {{-- <td>{{$customer->company_id}} </td>   --}}
+        <td> {{ optional($customer->company)->cpyname }} </td> 
+      <td> @if ($customer->image)
+          <img src="{{asset('storage/'.$customer->image)}}" alt="" class="img-thumbnail" width="50" height="50" >     
+            @endif
+        </td>
+      </tr>  
+
  @endforeach
  
  </table>
  </div> 
- <div class="col-12 d-flex justify-content-center pt-5">
+ {{-- <div class="col-12 d-flex justify-content-center pt-5">
     {{$customers->links()}}
- </div>  
+ </div>   --}}
  </div>
 </div> 
  @endsection
