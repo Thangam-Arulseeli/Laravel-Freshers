@@ -160,7 +160,7 @@ class CustomersController extends Controller
 
 // Way 2.2.  Authentication using Customer Controller using only method 
 public function __construct(){
-  $this->middleware('auth')->only(['edit', 'delete']); // Locks only edit and delete in CustomerContoller [Opposite to except] }
+  $this->middleware('auth')->only(['create', 'edit', 'delete']); // Locks only edit and delete in CustomerContoller [Opposite to except] }
  }
 
   // When the Customers Controller is called it automatically refers index() 
@@ -239,8 +239,9 @@ public function __construct(){
    //return redirect('customers'); 
 
    // Inserting a new Customer, and send a welcome mail to customer
+   $this->authorize('create', Customer::class);  // Check the user is authorized to access create() method
    $customer = Customer::create($this->validateRequest());
-   $this->storeImage($customer);
+   $this->storeImage($customer);   // To Store image in DB
    //dd($customer);
    //Mail::to($customer->mailid)->send(new WelcomeNewUserMail());
     //return redirect('customers');  // Printing static message
@@ -284,12 +285,14 @@ public function __construct(){
         'company_id' => 'required' 
     ]); */
     // $customer->update($data);
+    $this->authorize('update', Customer::class); // Check the user is authorized to access update method
     $customer->update($this->validateRequest());
     $this->storeImage($customer);
     return redirect('customers/'.$customer->id);
    }
 
    public function destroy(Customer $customer){
+    $this->authorize('delete',$customer); // Check the user is authorized to access delete() method
     $customer -> delete();
     return redirect('customers');
    }

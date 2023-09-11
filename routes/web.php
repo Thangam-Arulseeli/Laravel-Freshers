@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomersController; 
 use App\Http\Controllers\ContactFormController;
 
-//use App\Http\Controllers\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ Route::get('/', function(){
 // });
 
 //Route::view('/contact','contact');
-Route::view('about','about');
+Route::view('about','about')->middleware('test');
 // ---------------------------------
 // Route for sending the mail
 // Route::get('/contact', [ContactFormController::class,'create']); // Nav menu routing for sending the mail
@@ -77,11 +77,13 @@ Route::post('/contact-us', [ContactFormController::class, 'store'])->name('conta
     Route::get('customers', [CustomersController::class, 'index']);
     Route::get('/customers.create',[CustomersController::class,'create']);
     Route::post('customers',[CustomersController::class,'store']);
-    Route::get('/customers/{customer}',[CustomersController::class,'show']);
+    Route::get('/customers/{customer}',[CustomersController::class,'show'])->middleware('can:view,customer');
     Route::get('/customers/{customer}/edit',[CustomersController::class,'edit'])->name('customers.edit');
-   Route::patch('/customers/{customer}',[CustomersController::class, 'update'])->name('customers.update');
+    Route::patch('/customers/{customer}',[CustomersController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{customer}',[CustomersController::class,'destroy']);
 
+// -------
+   
  // WAY 1:. Route level authentication for specific action in resource
 // Route::get('/customers/{customer}/edit',[CustomersController::class,'edit'])->middleware('auth);
 //    Route::patch('/customers/{customer}',[CustomersController::class, 'update'])->middleware('auth);
@@ -89,7 +91,7 @@ Route::post('/contact-us', [ContactFormController::class, 'store'])->name('conta
 // --------
 
 //Resource Route automatically does all the actions when everything named properly
- //Route::resource('customers',CustomersController::class); 
+ // Route::resource('customers',CustomersController::class); 
 
 // ---------
 // ---------------------------------------------------------

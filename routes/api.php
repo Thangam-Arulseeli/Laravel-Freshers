@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Customer resource API
-//Route::resource('customers', CustomersController::class);
+Route::resource('customers', CustomersController::class);

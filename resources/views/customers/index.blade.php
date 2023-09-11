@@ -202,8 +202,11 @@
         </div> --}}
         {{-- <a href='{!! url('http://127.0.0.1:8000/customers/create'); !!}'>ADD NEW1</a>  --}}
          {{-- <a href='{{ route('customers/create') }}'> ADD NEW2 </a>  --}}
-  <p align="right"> <a href="/customers.create"> Add New Customer - Index </a></p>  
-  
+       
+         @can('create',App\Models\Customer::class);
+             <p align="right"> <a href="/customers/create"> Add New Customer - Index </a></p>  
+          @endcan
+
  <h4> Customer List </h4>      
  <div class="row py-3">
  <div class="col-sm-8 px-4"> 
@@ -226,7 +229,19 @@
      <tr>
        <th scope="row">{{$customer->id}}</th>
        <!-- <td>{{$customer->name}}</td> -->
-       <td> <a href="/customers/{{$customer->id}}">{{$customer->name}}</a></td>
+       {{-- <td> <a href="/customers/{{$customer->id}}">{{$customer->name}}</a></td> --}}
+       
+       {{-- Use Authorization --}}
+       <td>
+        @can('view', $customer)
+          <a href="/customers/{{$customer->id}}">{{$customer->name}}</a>
+        @endcan
+        @cannot('view', $customer)
+           {{$customer->name}}
+        @endcannot
+        </td>
+
+
        <td>{{$customer->age}}</td>
        <td>{{$customer->address}}</td>
        <td>{{$customer->contactno}}</td>
